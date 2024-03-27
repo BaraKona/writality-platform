@@ -8,8 +8,8 @@ function App() {
 	console.log("App rendered");
 	return (
 		<AppWrapper>
-			<div className="grow flex relative">
-				<div className="grow bg-black rounded-lg p-2">
+			<div className="grow flex relative gap-2">
+				<div className="grow bg-background rounded-lg p-2">
 					<Header />
 				</div>
 				<Sidebar />
