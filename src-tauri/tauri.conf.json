@@ -12,7 +12,42 @@
 	},
 	"tauri": {
 		"allowlist": {
-			"all": false
+			"window": {
+				"all": true,
+				"create": true,
+				"center": true,
+				"requestUserAttention": true,
+				"setResizable": true,
+				"setMaximizable": true,
+				"setMinimizable": true,
+				"setClosable": true,
+				"setTitle": true,
+				"maximize": true,
+				"unmaximize": true,
+				"minimize": true,
+				"unminimize": true,
+				"show": true,
+				"hide": true,
+				"close": true,
+				"setDecorations": true,
+				"setAlwaysOnTop": true,
+				"setContentProtected": true,
+				"setSize": true,
+				"setMinSize": true,
+				"setMaxSize": true,
+				"setPosition": true,
+				"setFullscreen": true,
+				"setFocus": true,
+				"setIcon": true,
+				"setSkipTaskbar": true,
+				"setCursorGrab": true,
+				"setCursorVisible": true,
+				"setCursorIcon": true,
+				"setCursorPosition": true,
+				"setIgnoreCursorEvents": true,
+				"startDragging": true,
+				"print": true
+			}
 		},
 		"bundle": {
 			"active": true,
@@ -38,6 +73,7 @@
 				"providerShortName": null,
 				"signingIdentity": null
 			},
+
 			"resources": [],
 			"shortDescription": "",
 			"targets": "all",
@@ -60,7 +96,9 @@
 				"height": 600,
 				"resizable": true,
 				"title": "Writality",
-				"width": 800
+				"width": 800,
+				"min-width": 800,
+				"min-height": 600
 			}
 		]
 	}

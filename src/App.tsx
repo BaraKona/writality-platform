@@ -1,18 +1,18 @@
 import AppWrapper from "./components/AppWrapper";
 import { useSignals } from "@preact/signals-react/runtime";
-import { counter } from "./signals";
-
+import { Header } from "./components/Header";
+import { Sidebar } from "./components/Sidebar";
 function App() {
 	useSignals();
+
+	console.log("App rendered");
 	return (
 		<AppWrapper>
-			<div className="grow bg-black rounded-lg">
-				<button
-					className="p-2 bg-blue-500 text-white rounded-lg"
-					onClick={() => counter.value++}
-				>
-					{counter.value}
-				</button>
+			<div className="grow flex relative">
+				<div className="grow bg-black rounded-lg p-2">
+					<Header />
+				</div>
+				<Sidebar />
 			</div>
 		</AppWrapper>
 	);
