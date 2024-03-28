@@ -7,7 +7,7 @@
 		"distDir": "../dist"
 	},
 	"package": {
-		"productName": "writality-platform",
+		"productName": "Writality",
 		"version": "0.1.0"
 	},
 	"tauri": {
