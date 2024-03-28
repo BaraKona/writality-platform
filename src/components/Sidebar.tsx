@@ -5,7 +5,7 @@ export const Sidebar = () => {
 
 	return (
 		<aside
-			className={`bg-background rounded w-64 ${
+			className={`bg-background border-r border-border w-64 ${
 				isSidebarOpen.value ? "block" : "hidden"
 			}`}
 		></aside>

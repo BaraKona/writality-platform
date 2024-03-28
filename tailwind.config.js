@@ -4,8 +4,10 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				background: "#fdfdfd",
-				border: "#eaeaea",
+				// flat white color scheme with white and black (different shades of white and black)
+				background: "#fff",
+				hover: "#f0f0f0",
+				border: "#e0e0e0",
 			},
 		},
 	},
