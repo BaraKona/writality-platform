@@ -3,10 +3,12 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import AppWrapper from "../components/AppWrapper";
 import { Header } from "../components/Header/Header";
 import { Sidebar } from "../components/Sidebar";
+import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
 
 export const Route = createRootRoute({
 	component: () => (
-		<>
+		<MantineProvider>
 			<AppWrapper>
 				<Header />
 				<div className="grow flex gap-px relative">
@@ -17,6 +19,6 @@ export const Route = createRootRoute({
 				</div>
 				<TanStackRouterDevtools />
 			</AppWrapper>
-		</>
+		</MantineProvider>
 	),
 });

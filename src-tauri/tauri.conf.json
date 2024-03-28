@@ -96,9 +96,7 @@
 				"height": 600,
 				"resizable": true,
 				"title": "Writality",
-				"width": 800,
-				"min-width": 800,
-				"min-height": 600
+				"width": 800
 			}
 		]
 	}
