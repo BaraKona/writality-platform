@@ -1,3 +1,4 @@
+import { Tooltip } from "@mantine/core";
 import { ReactNode } from "@tanstack/react-router";
 import { FC } from "react";
 
@@ -5,13 +6,25 @@ export const IconButtonWrapper: FC<{
 	onClick: () => void;
 	children: ReactNode;
 	className?: string;
-}> = ({ onClick, children, className }) => {
+	name: string;
+	position?: "left" | "right" | "top" | "bottom";
+}> = ({ onClick, children, className, name, position }) => {
 	return (
-		<button
-			onClick={onClick}
-			className={`p-0.5 rounded hover:bg-hover ${className}`}
+		<Tooltip
+			label={name}
+			withArrow
+			className="text-xs"
+			position={position}
+			classNames={{
+				tooltip: "!p-0.5 !px-2 !text-xs",
+			}}
 		>
-			{children}
-		</button>
+			<button
+				onClick={onClick}
+				className={`p-0.5 rounded hover:bg-hover ${className}`}
+			>
+				{children}
+			</button>
+		</Tooltip>
 	);
 };

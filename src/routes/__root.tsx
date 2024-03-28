@@ -2,7 +2,7 @@ import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import AppWrapper from "../components/AppWrapper";
 import { Header } from "../components/Header/Header";
-import { Sidebar } from "../components/Sidebar";
+import { Sidebar } from "../components/sidebar/Sidebar";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 
