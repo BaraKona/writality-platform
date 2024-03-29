@@ -2,7 +2,11 @@ import writality from "../../assets/writality.svg";
 import { Navbar } from "./Navbar";
 import { version } from "../../../package.json";
 import { Divider } from "@mantine/core";
-import { IconBrandGoogleDrive, IconCloudUpload } from "@tabler/icons-react";
+import {
+	IconBrandGoogleDrive,
+	IconBrandOnedrive,
+	IconCloudUpload,
+} from "@tabler/icons-react";
 
 export const Setup = () => {
 	return (
@@ -17,22 +21,21 @@ export const Setup = () => {
 					<div className="mt-4">
 						<p className="text-xs"> Your projects will appear here </p>
 						<Divider my={10} />
-						<IconBrandGoogleDrive
-							size={20}
-							stroke={1}
-							className="mx-auto my-2"
-						/>
+						<div className="flex gap-1 my-2 mx-auto items-center justify-center">
+							<IconBrandGoogleDrive size={20} stroke={1} className="" />
+							<IconBrandOnedrive size={20} stroke={1} className="" />
+						</div>
 						<p className="text-xs">
 							Your projects will be stored in a selected location on your
-							computer. We recommend using a cloud storage service like Dropbox,
+							computer. We recommend using a cloud storage service like iCloud,
 							Google Drive, or OneDrive.
 						</p>
 						<br />
-						<IconCloudUpload size={20} stroke={1} className="mx-auto" />
+						<IconCloudUpload size={20} stroke={1} className="mx-auto mb-2" />
 						<p className="text-xs">
-							Alternatively you can use writality store to store your projects.
-							Although this is not a free service, it is a secure and reliable
-							way to store your projects.
+							Alternatively you can use <b>Writality store</b> to store your
+							projects. Although this is not a free service, it is a secure and
+							reliable way to store your projects.
 						</p>
 					</div>
 				</div>
