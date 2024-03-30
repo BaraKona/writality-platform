@@ -8,7 +8,8 @@ fn main() {
       create_setup,
       get_all_files,
       create_folder,
-      create_file_json
+      create_file_json,
+      get_file_content
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
@@ -130,10 +131,12 @@ async fn get_all_files() -> Option<Vec<FileInfo>> {
                             let path = e.path();
                             let filename = path.file_stem()?.to_string_lossy().into_owned();
                             let extension = path.extension()?.to_string_lossy().into_owned();
+                            let content = std::fs::read_to_string(&path).unwrap();
                             Some(FileInfo {
                                 filename,
                                 extension: Some(extension),
                                 path: path.to_string_lossy().into_owned(),
+
                             })
                         })
                     })
@@ -207,4 +210,21 @@ async fn create_file_json() {
             println!("Failed to create new file");
         }
     }
+}
+
+// remember to call `.manage(MyState::default())`
+#[tauri::command]
+async fn get_file_content(path: String) -> String {
+  // read file content
+  let file_content = std::fs::read_to_string(path);
+  match file_content {
+    Ok(content) => {
+      println!("File content read");
+      return content;
+    },
+    Err(_) => {
+      println!("Failed to read file content");
+      return String::from("Failed to read file content");
+    }
+  }
 }

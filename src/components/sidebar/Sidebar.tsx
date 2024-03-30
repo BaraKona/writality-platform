@@ -3,13 +3,14 @@ import { isSidebarOpen } from "../../signals";
 import { TopNav } from "./TopNav";
 import { SideNav } from "./SideNav";
 import { useFiles } from "../../hooks/useFiles";
+import { IconFolder, IconScript } from "@tabler/icons-react";
+import { Link } from "@tanstack/react-router";
 
 export const Sidebar = () => {
 	useSignals();
 
 	const { data, isLoading } = useFiles();
 
-	console.log(data);
 	return (
 		<aside
 			className={`bg-background border-r border-border w-64 p-2 ${
@@ -19,25 +20,27 @@ export const Sidebar = () => {
 			<section className="flex h-full grow">
 				<SideNav />
 				<TopNav>
-					<div className="flex gap-2 flex-col items-center">
-						{!isLoading && data?.length === 0 ? (
-							<p className="text-center text-gray-500">
-								No files found. Click the button below to create a new file.
-							</p>
-						) : null}
-
-						{!isLoading && data?.length > 0 ? (
-							<>
-								{data.map((file) => (
-									<button
-										key={file.id}
-										className="w-full text-left px-2 py-1 rounded-lg hover:bg-gray-200/25"
-									>
-										{file.filename}
-									</button>
-								))}
-							</>
-						) : null}
+					<div className="flex gap-0.5 flex-col mt-2">
+						{data?.map((file, index) => (
+							<Link
+								to={"file/" + file.filename}
+								search={{
+									path: file.path,
+								}}
+								key={index}
+								className="flex gap-2 hover:bg-hover rounded"
+							>
+								<div className="flex items-center gap-2 py-1 px-2 cursor-pointer text-gray-600">
+									{file.extension === "folder" && (
+										<IconFolder size={16} stroke={1} />
+									)}
+									{file.extension === "json" && (
+										<IconScript size={16} stroke={1} />
+									)}
+									<p className="text-xs">{file.filename}</p>
+								</div>
+							</Link>
+						))}
 					</div>
 				</TopNav>
 			</section>
