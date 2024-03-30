@@ -5,8 +5,11 @@ import {
 	IconPencilPlus,
 } from "@tabler/icons-react";
 import { IconButtonWrapper } from "../button/IconButtonWrapper";
+import { useCreateFiles } from "../../hooks/useCreateFiles";
 
-export const TopNav = () => {
+export const TopNav = ({ children }: { children: React.ReactNode }) => {
+	const { mutate: createFile } = useCreateFiles();
+
 	return (
 		<div className="px-2 w-full">
 			<div className="flex justify-center items-center gap-1">
@@ -18,7 +21,7 @@ export const TopNav = () => {
 					<IconFolderPlus size={18} stroke={1} />
 				</IconButtonWrapper>
 				<IconButtonWrapper
-					onClick={() => {}}
+					onClick={createFile}
 					position="bottom"
 					name="Create script"
 				>
@@ -33,6 +36,7 @@ export const TopNav = () => {
 				</IconButtonWrapper>
 			</div>
 			<Divider />
+			{children}
 		</div>
 	);
 };
