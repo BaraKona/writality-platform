@@ -3,8 +3,9 @@ import { isSidebarOpen } from "../../signals";
 import { TopNav } from "./TopNav";
 import { SideNav } from "./SideNav";
 import { useFiles } from "../../hooks/useFiles";
-import { IconFolder, IconScript } from "@tabler/icons-react";
-import { Link, useParams } from "@tanstack/react-router";
+import { useParams } from "@tanstack/react-router";
+import { FolderListItem } from "./FolderListItem";
+import { ScriptListItem } from "./ScriptListItem";
 
 export const Sidebar = () => {
 	useSignals();
@@ -28,28 +29,27 @@ export const Sidebar = () => {
 						{data?.map((file, index) => (
 							<>
 								{file.extension === "folder" && (
-									<div className="flex items-center gap-2 py-1 px-2 cursor-pointer text-gray-600 hover:bg-hover rounded">
-										<IconFolder size={16} stroke={1.5} />
+									// <div className="flex items-center gap-2 py-1 px-2 cursor-pointer text-gray-600 hover:bg-hover rounded">
+									// 	<IconFolder size={16} stroke={1.5} />
 
-										<p className="text-xs font-semibold">{file.filename}</p>
-									</div>
+									// 	<p className="text-xs font-semibold">{file.filename}</p>
+									// </div>
+									<FolderListItem
+										files={file.children}
+										key={index}
+										name={file.filename}
+										level={0}
+										id={file.filename + index + 0}
+										currentPath={name}
+									/>
 								)}
 								{file.extension === "json" && (
-									<Link
-										to={"file/" + file.filename}
-										search={{
-											path: file.path,
-										}}
+									<ScriptListItem
+										currentPath={name}
 										key={index}
-										className={`flex gap-2 hover:bg-hover r ounded ${
-											name === file.filename ? "bg-hover" : ""
-										}`}
-									>
-										<div className="flex items-center gap-2 py-1 px-2 cursor-pointer text-gray-600">
-											<IconScript size={16} stroke={1.5} />
-											<p className="text-xs font-semibold">{file.filename}</p>
-										</div>
-									</Link>
+										name={file.filename}
+										path={file.path}
+									/>
 								)}
 							</>
 						))}

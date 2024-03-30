@@ -90,6 +90,7 @@ struct FileInfo {
     filename: String,
     extension: Option<String>,
     path: String,
+    children: Option<Vec<FileInfo>>,
 }
 
 #[tauri::command]
@@ -126,7 +127,6 @@ async fn get_all_files() -> Option<Vec<FileInfo>> {
     collect_files_and_folders(&path, &mut file_info_vec);
     Some(file_info_vec)
 }
-
 fn collect_files_and_folders(path: &str, file_info_vec: &mut Vec<FileInfo>) {
     if let Ok(entries) = std::fs::read_dir(path) {
         let mut folders = Vec::new();
@@ -153,13 +153,19 @@ fn collect_files_and_folders(path: &str, file_info_vec: &mut Vec<FileInfo>) {
                     None
                 };
 
-                let file_info = FileInfo {
+                let mut file_info = FileInfo {
                     filename: filename.clone(),
                     extension,
                     path: file_path.to_string_lossy().into_owned(),
+                    children: None,
                 };
 
                 if file_type.is_dir() {
+                    // Recursively collect files and folders from subdirectories
+                    let mut children = Vec::new();
+                    collect_files_and_folders(&file_info.path, &mut children);
+                    file_info.children = Some(children);
+
                     // Collect folders separately
                     folders.push(file_info);
                 } else {

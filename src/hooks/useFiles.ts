@@ -5,6 +5,7 @@ interface FileInfo {
 	filename: string;
 	extension: string | null;
 	path: string;
+	children: FileInfo[];
 }
 
 export function useFiles() {

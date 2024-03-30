@@ -1,17 +1,20 @@
 import { IconFolderFilled, IconFolderOpen } from "@tabler/icons-react";
 import { useLocalStorage } from "@mantine/hooks";
 import { AnimatePresence, motion } from "framer-motion";
+import { ScriptListItem } from "./ScriptListItem";
 
 export const FolderListItem = ({
 	name,
 	files,
 	level,
 	id,
+	currentPath,
 }: {
 	name: string;
 	files: any[];
 	level: number;
 	id: string;
+	currentPath: string;
 }): JSX.Element => {
 	const [open, setOpen] = useLocalStorage({
 		key: `folder-${id}`,
@@ -34,7 +37,7 @@ export const FolderListItem = ({
 	return (
 		<div>
 			<li
-				className={`flex items-center w-full px-2 py-1 text-secondaryText text-sm rounded cursor-pointer group-hover:text-primaryText`}
+				className={`flex items-center w-full text-xs font-semibold px-2 py-1 text-gray-600 rounded cursor-pointer group-hover:text-primaryText`}
 				onClick={() => {
 					setOpen(!open);
 				}}
@@ -68,14 +71,22 @@ export const FolderListItem = ({
 					>
 						{files.map((file, index) => (
 							<div key={index}>
-								{file.extension === "json" && <p>file.name</p>}
+								{file.extension === "json" && (
+									<ScriptListItem
+										key={index}
+										name={file.filename}
+										path={file.path}
+										currentPath={currentPath}
+									/>
+								)}
 								{file.extension === "folder" && (
 									<FolderListItem
 										key={index}
-										name={file.name}
-										files={file.files}
+										name={file.filename}
+										files={file.children}
 										level={level + 1}
-										id={file.id}
+										id={file.filename + level + index}
+										currentPath={currentPath}
 									/>
 								)}
 							</div>
