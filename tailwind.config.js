@@ -10,6 +10,7 @@ export default {
 			colors: {
 				// flat white color scheme with white and black (different shades of white and black)
 				background: "#fff",
+				backgroundHover: "#f9f9f9",
 				hover: "#f0f0f0",
 				border: "#e0e0e0",
 				text: "#394251",

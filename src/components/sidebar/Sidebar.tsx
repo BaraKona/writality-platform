@@ -17,7 +17,7 @@ export const Sidebar = () => {
 
 	return (
 		<aside
-			className={`bg-background border-r border-border w-64 p-2 ${
+			className={`bg-backgroundHover w-64 p-2 ${
 				isSidebarOpen.value ? "block" : "hidden"
 			}`}
 		>
@@ -41,7 +41,7 @@ export const Sidebar = () => {
 											path: file.path,
 										}}
 										key={index}
-										className={`flex gap-2 hover:bg-hover rounded ${
+										className={`flex gap-2 hover:bg-hover r ounded ${
 											name === file.filename ? "bg-hover" : ""
 										}`}
 									>

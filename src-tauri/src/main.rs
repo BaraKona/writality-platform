@@ -128,51 +128,58 @@ async fn get_all_files() -> Option<Vec<FileInfo>> {
 }
 
 fn collect_files_and_folders(path: &str, file_info_vec: &mut Vec<FileInfo>) {
-  if let Ok(entries) = std::fs::read_dir(path) {
-      let mut folders = Vec::new();
-      let mut files = Vec::new();
+    if let Ok(entries) = std::fs::read_dir(path) {
+        let mut folders = Vec::new();
+        let mut files = Vec::new();
 
-      for entry in entries {
-          if let Ok(entry) = entry {
-              let file_type = entry.file_type().unwrap();
-              let file_path = entry.path();
+        for entry in entries {
+            if let Ok(entry) = entry {
+                let file_type = entry.file_type().unwrap();
+                let file_path = entry.path();
 
-              // Get the file name without the extension
-              let filename = file_path.file_stem().unwrap().to_string_lossy().into_owned();
+                // Get the file name without the extension
+                let filename = file_path.file_stem().unwrap().to_string_lossy().into_owned();
 
-              // Skip .DS_Store files
-              if filename == ".DS_Store" {
-                  continue;
-              }
+                // Skip .DS_Store files
+                if filename == ".DS_Store" {
+                    continue;
+                }
 
-              let extension = if file_type.is_file() {
-                  file_path.extension().map(|ext| ext.to_string_lossy().into_owned())
-              } else if file_type.is_dir() {
-                  Some("folder".to_string())
-              } else {
-                  None
-              };
+                let extension = if file_type.is_file() {
+                    file_path.extension().map(|ext| ext.to_string_lossy().into_owned())
+                } else if file_type.is_dir() {
+                    Some("folder".to_string())
+                } else {
+                    None
+                };
 
-              let file_info = FileInfo {
-                  filename: filename.clone(),
-                  extension,
-                  path: file_path.to_string_lossy().into_owned(),
-              };
+                let file_info = FileInfo {
+                    filename: filename.clone(),
+                    extension,
+                    path: file_path.to_string_lossy().into_owned(),
+                };
 
-              if file_type.is_dir() {
-                  // Collect folders separately
-                  folders.push(file_info);
-              } else {
-                  // Collect files separately
-                  files.push(file_info);
-              }
-          }
-      }
+                if file_type.is_dir() {
+                    // Collect folders separately
+                    folders.push(file_info);
+                } else {
+                    // Collect files separately
+                    files.push(file_info);
+                }
+            }
+        }
 
-      // Push folders first, then files
-      file_info_vec.extend(folders);
-      file_info_vec.extend(files);
-  }
+        // Sort files by creation time
+        files.sort_by_key(|file_info| {
+            std::fs::metadata(&file_info.path)
+                .and_then(|metadata| metadata.created())
+                .unwrap_or(std::time::SystemTime::UNIX_EPOCH)
+        });
+
+        // Push folders first, then files
+        file_info_vec.extend(folders);
+        file_info_vec.extend(files);
+    }
 }
 
 
@@ -308,24 +315,28 @@ async fn get_file_content(path: String) -> String {
 
 #[tauri::command]
 async fn save_file_content(path: String, content: String, name: String) {
-    let json_content = json!(content);
-    let file_content = std::fs::write(
-        &path,
-        format!(
-            "{{\n  \"dateCreated\": \"{}\",\n  \"content\": {},\n  \"dateModified\": \"{}\"\n}}",
-            Utc::now().to_rfc3339(),
-            json_content.to_string(),
-            Utc::now().to_rfc3339()
-        ),
-    );
 
-    match file_content {
+    let json_content = json!(content);
+    let file_content = async {
+        std::fs::write(
+            &path,
+            format!(
+                "{{\n  \"dateCreated\": \"{}\",\n  \"content\": {},\n  \"dateModified\": \"{}\"\n}}",
+                Utc::now().to_rfc3339(),
+                json_content.to_string(),
+                Utc::now().to_rfc3339()
+            ),
+        )
+    };
+
+    match file_content.await {
         Ok(_) => {
             println!("{}", content);
             println!("File content saved");
         }
         Err(_) => {
             println!("Failed to save file content");
+            return; // Exit early if file write fails
         }
     }
 
@@ -333,7 +344,22 @@ async fn save_file_content(path: String, content: String, name: String) {
     new_path.set_file_name(format!("{}.json", name));
     let new_path_str = new_path.to_string_lossy().into_owned();
 
-    match std::fs::rename(&path, &new_path_str) {
+    let rename_result = rename_file(path, name).await;
+
+}
+
+async fn rename_file(path: String, name: String) {
+    let mut new_path = PathBuf::from(&path);
+    let mut counter = 1;
+    new_path.set_file_name(format!("{}.json", name));
+    while new_path.exists() {
+        new_path.set_file_name(format!("{}({}).json", name, counter));
+        counter += 1;
+    }
+    let new_path_str = new_path.to_string_lossy().into_owned();
+
+    let rename_result = std::fs::rename(&path, &new_path_str);
+    match rename_result {
         Ok(_) => println!("File name updated"),
         Err(err) => println!("Failed to update file name: {}", err),
     }
