@@ -11,6 +11,8 @@ export const Sidebar = () => {
 
 	const { data } = useFiles();
 
+	console.log({ data });
+
 	const { name } = useParams("file") as { name: string };
 
 	return (

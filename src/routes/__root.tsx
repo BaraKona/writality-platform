@@ -33,7 +33,7 @@ function SetupApp() {
 					<Outlet />
 				</div>
 			</div>
-			<TanStackRouterDevtools />
+			<TanStackRouterDevtools position="bottom-right" />
 		</AppWrapper>
 	);
 }

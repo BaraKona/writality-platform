@@ -40,11 +40,6 @@ function PostComponent() {
 		});
 	}, [data]);
 
-	// const editor = useCreateBlockNote({
-	// 	initialContent:
-	// 		data && data.content ? JSON.parse(data?.content) : undefined,
-	// });
-
 	return (
 		<div
 			className="max-w-screen-md mx-auto grow overflow-y-auto h-[calc(100vh-5rem)]"
