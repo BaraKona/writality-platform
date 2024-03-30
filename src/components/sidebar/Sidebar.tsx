@@ -25,7 +25,7 @@ export const Sidebar = () => {
 			<section className="flex h-full grow">
 				<SideNav />
 				<TopNav>
-					<div className="flex gap-0.5 flex-col mt-2">
+					<div className="flex gap-0.5 flex-col mt-2 h-[calc(100vh-6rem)] overflow-y-auto">
 						{data?.map((file, index) => (
 							<>
 								{file.extension === "folder" && (

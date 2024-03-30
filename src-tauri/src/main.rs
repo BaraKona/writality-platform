@@ -229,7 +229,7 @@ async fn create_folder() {
         }
     }
 
-    let new_folder = std::fs::create_dir(format!("{}/new_folder[{}]", path, count));
+    let new_folder = std::fs::create_dir(format!("{}/Untitled {}", path, count));
 
     match new_folder {
         Ok(_) => {
@@ -284,7 +284,7 @@ async fn create_file_json() {
     }
 
     let new_file = std::fs::write(
-      format!("{}/new_file[{}].json", path, count),
+      format!("{}/Untitled {}.json", path, count),
       format!(
           "{{\n  \"dateCreated\": \"{}\",\n  \"content\": \"\",\n  \"dateModified\": \"{}\"\n}}",
           Utc::now().to_rfc3339(),
@@ -314,7 +314,9 @@ async fn get_file_content(path: String) -> String {
     },
     Err(_) => {
       println!("Failed to read file content");
-      return String::from("Failed to read file content");
+      return {
+        String::from("Failed to read file content")
+      };
     }
   }
 }

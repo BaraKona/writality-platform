@@ -5,3 +5,26 @@
 body {
 	/* background-color: rgb(190 18 60 / 0.3) !important; */
 }
+
+/* For Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: #394251 transparent;
+}
+
+/* For Chrome, Safari, and Edge */
+*::-webkit-scrollbar {
+	width: 3px;
+}
+*::-webkit-scrollbar-track {
+	background: transparent; /* color of the tracking area */
+}
+*::-webkit-scrollbar-thumb {
+	background-color: #394251; /* color of the scroll thumb */
+	border-radius: 20px; /* roundness of the scroll thumb */
+	border: 3px solid #394251; /* creates padding around scroll thumb */
+}
+
+html {
+	scroll-behavior: smooth;
+}
