@@ -1,4 +1,3 @@
-import { Divider } from "@mantine/core";
 import {
 	IconFolderPlus,
 	IconScriptPlus,
@@ -13,31 +12,33 @@ export const TopNav = ({ children }: { children: React.ReactNode }) => {
 	const { mutate: createFolder } = useCreateFolder();
 
 	return (
-		<div className="px-2 w-full">
+		<div className="px-1 w-full">
 			<div className="flex justify-center items-center gap-1">
 				<IconButtonWrapper
+					withBorder
 					onClick={createFolder}
 					position="bottom"
 					name="Create folder"
 				>
-					<IconFolderPlus size={18} stroke={1} />
+					<IconFolderPlus size={18} stroke={1.5} />
 				</IconButtonWrapper>
 				<IconButtonWrapper
+					withBorder
 					onClick={createFile}
 					position="bottom"
 					name="Create script"
 				>
-					<IconScriptPlus size={18} stroke={1} />
+					<IconScriptPlus size={18} stroke={1.5} />
 				</IconButtonWrapper>
 				<IconButtonWrapper
+					withBorder
 					onClick={() => {}}
 					position="bottom"
 					name="Create canvas"
 				>
-					<IconPencilPlus size={18} stroke={1} />
+					<IconPencilPlus size={18} stroke={1.5} />
 				</IconButtonWrapper>
 			</div>
-			<Divider />
 			{children}
 		</div>
 	);

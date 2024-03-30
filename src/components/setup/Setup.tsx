@@ -41,8 +41,8 @@ export const Setup = () => {
 						<p className="text-xs"> Your projects will appear here </p>
 						<Divider my={10} />
 						<div className="flex gap-1 my-2 mx-auto items-center justify-center">
-							<IconBrandGoogleDrive size={20} stroke={1} className="" />
-							<IconBrandOnedrive size={20} stroke={1} className="" />
+							<IconBrandGoogleDrive size={20} stroke={1.5} className="" />
+							<IconBrandOnedrive size={20} stroke={1.5} className="" />
 						</div>
 						<p className="text-xs">
 							Your projects will be stored in a selected location on your
@@ -50,7 +50,7 @@ export const Setup = () => {
 							Google Drive, or OneDrive.
 						</p>
 						<br />
-						<IconCloudUpload size={20} stroke={1} className="mx-auto mb-2" />
+						<IconCloudUpload size={20} stroke={1.5} className="mx-auto mb-2" />
 						<p className="text-xs">
 							Alternatively you can use <b>Writality store</b> to store your
 							projects. Although this is not a free service, it is a secure and

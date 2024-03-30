@@ -8,7 +8,8 @@ export const IconButtonWrapper: FC<{
 	className?: string;
 	name: string;
 	position?: "left" | "right" | "top" | "bottom";
-}> = ({ onClick, children, className, name, position }) => {
+	withBorder?: boolean;
+}> = ({ onClick, children, className, name, position, withBorder }) => {
 	return (
 		<Tooltip
 			label={name}
@@ -21,7 +22,7 @@ export const IconButtonWrapper: FC<{
 		>
 			<button
 				onClick={onClick}
-				className={`p-0.5 rounded hover:bg-hover ${className}`}
+				className={`p-0.5 rounded hover:bg-hover ${className} ${withBorder ? "border border-border" : ""}`}
 			>
 				{children}
 			</button>

@@ -14,14 +14,11 @@ export const Sidebar = () => {
 
 	console.log({ data });
 
-	const { name } = useParams("file") as { name: string };
+	// @ts-expect-error - path will be defined
+	const { name } = useParams("file");
 
 	return (
-		<aside
-			className={`bg-backgroundHover w-64 p-2 ${
-				isSidebarOpen.value ? "block" : "hidden"
-			}`}
-		>
+		<aside className={`w-64 p-2 ${isSidebarOpen.value ? "block" : "hidden"}`}>
 			<section className="flex h-full grow">
 				<SideNav />
 				<TopNav>

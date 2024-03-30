@@ -1,7 +1,6 @@
 import { invoke } from "@tauri-apps/api";
 import { useQuery } from "@tanstack/react-query";
-
-interface FileInfo {
+export interface FileInfo {
 	filename: string;
 	extension: string | null;
 	path: string;

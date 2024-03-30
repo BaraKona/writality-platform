@@ -19,20 +19,15 @@ function PostComponent() {
 
 	const [na, setName] = useState(name);
 
-	console.log({
-		name,
-		path,
-	});
 	const { data, isLoading } = useFile(path);
 
 	const { mutate: saveFile } = useSaveFile();
 
-	console.log({ data });
-
 	const editor = useMemo(() => {
-		if (isLoading || data === undefined) {
+		if (isLoading || !data || data === "") {
 			return undefined;
 		}
+
 		const editorContent = JSON.parse(data);
 
 		return BlockNoteEditor.create({
@@ -43,24 +38,25 @@ function PostComponent() {
 	}, [data]);
 
 	function save() {
+		console.log("Saving", name);
 		saveFile({
 			path,
 			content: JSON.stringify(editor?.document),
-			name: na,
+			name,
 		});
 	}
 
 	return (
 		<div
 			className="max-w-4xl mx-auto grow overflow-y-auto h-[calc(100vh-5rem)]"
-			key={path}
+			key={path + name}
 		>
 			<div className="flex flex-col gap-2 pt-10 h-full grow">
 				<TextInput
 					height={"auto"}
 					multiple
 					defaultValue={name}
-					key={path}
+					key={path + name}
 					onBlur={save}
 					onChange={(e) => setName(e.currentTarget.value)}
 					className="w-full mb-4 border-0 px-10"

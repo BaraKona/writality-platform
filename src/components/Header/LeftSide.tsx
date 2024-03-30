@@ -18,7 +18,7 @@ export const LeftSide = () => {
 				className="rounded h-4 w-4 p-0.5 bg-red-300/50 flex items-center justify-center"
 				onClick={() => appWindow.close()}
 			>
-				<IconX size={20} stroke={1} />
+				<IconX size={20} stroke={1.5} />
 			</IconButtonWrapper>
 			<IconButtonWrapper
 				name="Maximize"
@@ -27,20 +27,20 @@ export const LeftSide = () => {
 					appWindow.setFullscreen((isFullscreen.value = !isFullscreen.value))
 				}
 			>
-				<IconArrowsMaximize size={20} stroke={1} />
+				<IconArrowsMaximize size={20} stroke={1.5} />
 			</IconButtonWrapper>
 			<IconButtonWrapper
 				name="Minimize"
 				onClick={() => appWindow.minimize()}
 				className="rounded h-4 w-4 p-0.5 bg-gray-200/25 flex items-center justify-center"
 			>
-				<IconMinus size={20} stroke={1} />
+				<IconMinus size={20} stroke={1.5} />
 			</IconButtonWrapper>
 			<IconButtonWrapper
 				name="Toggle Sidebar"
 				onClick={() => (isSidebarOpen.value = !isSidebarOpen.value)}
 			>
-				<IconLayoutSidebar size={18} stroke={1} />
+				<IconLayoutSidebar size={18} stroke={1.5} />
 			</IconButtonWrapper>
 		</div>
 	);

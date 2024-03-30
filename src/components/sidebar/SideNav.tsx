@@ -10,10 +10,10 @@ export const SideNav = () => {
 	return (
 		<div className="flex flex-col gap-1 border-r border-border pr-1.5">
 			<IconButtonWrapper onClick={() => {}} position="right" name="Home">
-				<IconHome size={20} stroke={1} />
+				<IconHome size={20} stroke={1.5} />
 			</IconButtonWrapper>
 			<IconButtonWrapper onClick={() => {}} position="right" name="Somewhere">
-				<IconTemplate size={20} stroke={1} />
+				<IconTemplate size={20} stroke={1.5} />
 			</IconButtonWrapper>
 
 			<IconButtonWrapper
@@ -22,10 +22,10 @@ export const SideNav = () => {
 				className="mt-auto"
 				name="Help"
 			>
-				<IconHelpHexagon size={20} stroke={1} />
+				<IconHelpHexagon size={20} stroke={1.5} />
 			</IconButtonWrapper>
 			<IconButtonWrapper onClick={() => {}} position="right" name="Settings">
-				<IconSettings size={20} stroke={1} />
+				<IconSettings size={20} stroke={1.5} />
 			</IconButtonWrapper>
 		</div>
 	);

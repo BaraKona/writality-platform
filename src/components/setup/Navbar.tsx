@@ -11,7 +11,7 @@ export const Navbar = () => {
 					className="rounded h-4 w-4 p-0.5 bg-red-300/50 flex items-center justify-center z-10"
 					onClick={() => appWindow.close()}
 				>
-					<IconX size={20} stroke={1} />
+					<IconX size={20} stroke={1.5} />
 				</IconButtonWrapper>
 
 				<IconButtonWrapper
@@ -19,7 +19,7 @@ export const Navbar = () => {
 					onClick={() => appWindow.minimize()}
 					className="rounded h-4 w-4 p-0.5 bg-gray-200/25 flex items-center justify-center z-10"
 				>
-					<IconMinus size={20} stroke={1} />
+					<IconMinus size={20} stroke={1.5} />
 				</IconButtonWrapper>
 			</div>
 		</nav>
