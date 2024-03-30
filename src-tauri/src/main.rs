@@ -3,6 +3,7 @@
 use serde::Serialize;
 use chrono::Utc;
 use serde_json::json;
+use std::path::PathBuf;
 
 
 fn main() {
@@ -84,8 +85,7 @@ async fn create_setup_file() {
     }
   }
 }
-
-#[derive(serde::Serialize)]
+#[derive(Serialize)]
 struct FileInfo {
     filename: String,
     extension: Option<String>,
@@ -94,8 +94,6 @@ struct FileInfo {
 
 #[tauri::command]
 async fn get_all_files() -> Option<Vec<FileInfo>> {
-    // ... (previous code)
-    println!("Getting all files");
     // Read setup.json
     let content = match std::fs::read_to_string("setup.json") {
         Ok(content) => content,
@@ -122,46 +120,112 @@ async fn get_all_files() -> Option<Vec<FileInfo>> {
             return None;
         }
     };
-    // Read files from the obtained path
-    std::fs::read_dir(path)
-        .map_or_else(
-            |err| {
-                println!("Failed to read directory '{}': {}", path, err);
-                None
-            },
-            |paths| {
-                Some(
-                    paths.filter_map(|entry| {
-                        entry.ok().and_then(|e| {
-                            let path = e.path();
-                            let filename = path.file_stem()?.to_string_lossy().into_owned();
-                            let extension = path.extension()?.to_string_lossy().into_owned();
-                            let content = std::fs::read_to_string(&path).unwrap();
-                            Some(FileInfo {
-                                filename,
-                                extension: Some(extension),
-                                path: path.to_string_lossy().into_owned(),
 
-                            })
-                        })
-                    })
-                    .collect(),
-                )
-            },
-        )
+    // Recursively collect files and folders
+    let mut file_info_vec = Vec::new();
+    collect_files_and_folders(&path, &mut file_info_vec);
+    Some(file_info_vec)
 }
 
-#[tauri::command]
-async fn create_folder(path: String) {
-  let new_folder = std::fs::create_dir_all(path);
-  match new_folder {
-    Ok(_) => {
-      println!("New folder created");
-    },
-    Err(_) => {
-      println!("Failed to create new folder");
-    }
+fn collect_files_and_folders(path: &str, file_info_vec: &mut Vec<FileInfo>) {
+  if let Ok(entries) = std::fs::read_dir(path) {
+      let mut folders = Vec::new();
+      let mut files = Vec::new();
+
+      for entry in entries {
+          if let Ok(entry) = entry {
+              let file_type = entry.file_type().unwrap();
+              let file_path = entry.path();
+
+              // Get the file name without the extension
+              let filename = file_path.file_stem().unwrap().to_string_lossy().into_owned();
+
+              // Skip .DS_Store files
+              if filename == ".DS_Store" {
+                  continue;
+              }
+
+              let extension = if file_type.is_file() {
+                  file_path.extension().map(|ext| ext.to_string_lossy().into_owned())
+              } else if file_type.is_dir() {
+                  Some("folder".to_string())
+              } else {
+                  None
+              };
+
+              let file_info = FileInfo {
+                  filename: filename.clone(),
+                  extension,
+                  path: file_path.to_string_lossy().into_owned(),
+              };
+
+              if file_type.is_dir() {
+                  // Collect folders separately
+                  folders.push(file_info);
+              } else {
+                  // Collect files separately
+                  files.push(file_info);
+              }
+          }
+      }
+
+      // Push folders first, then files
+      file_info_vec.extend(folders);
+      file_info_vec.extend(files);
   }
+}
+
+
+#[tauri::command]
+async fn create_folder() {
+    // Read setup.json
+    let content = match std::fs::read_to_string("setup.json") {
+        Ok(content) => content,
+        Err(_) => {
+            println!("Failed to read setup file");
+            return;
+        }
+    };
+
+    // Parse JSON content
+    let json: serde_json::Value = match serde_json::from_str(&content) {
+        Ok(json) => json,
+        Err(_) => {
+            println!("Failed to parse JSON content");
+            return;
+        }
+    };
+
+    // Get path from JSON
+    let path = match json["path"].as_str() {
+        Some(path) => path,
+        None => {
+            println!("'path' key not found in JSON");
+            return;
+        }
+    };
+
+    // Add new folder to the path. so it goes new_folder[1], new_folder[2], etc.
+    let folders = std::fs::read_dir(path).unwrap();
+    let mut count = 0;
+    for folder in folders {
+        if let Ok(folder) = folder {
+            if folder.path().is_dir() {
+                count += 1;
+            }
+        }
+    }
+
+    let new_folder = std::fs::create_dir(format!("{}/new_folder[{}]", path, count));
+
+    match new_folder {
+        Ok(_) => {
+            println!("New folder created");
+        },
+        Err(_) => {
+            println!("Failed to create new folder");
+        }
+    }
 }
 
 #[tauri::command]
@@ -243,25 +307,34 @@ async fn get_file_content(path: String) -> String {
 }
 
 #[tauri::command]
-async fn save_file_content(path: String, content: String) {
-  let json_content = json!(content);
-  let file_content = std::fs::write(
-      path,
-      format!(
-          "{{\n  \"dateCreated\": \"{}\",\n  \"content\": {},\n  \"dateModified\": \"{}\"\n}}",
-          Utc::now().to_rfc3339(),
-          json_content.to_string(),
-          Utc::now().to_rfc3339()
-      ),
-  );
+async fn save_file_content(path: String, content: String, name: String) {
+    let json_content = json!(content);
+    let file_content = std::fs::write(
+        &path,
+        format!(
+            "{{\n  \"dateCreated\": \"{}\",\n  \"content\": {},\n  \"dateModified\": \"{}\"\n}}",
+            Utc::now().to_rfc3339(),
+            json_content.to_string(),
+            Utc::now().to_rfc3339()
+        ),
+    );
 
-  match file_content {
-      Ok(_) => {
-          println!("{}", content);
-          println!("File content saved");
-      }
-      Err(_) => {
-          println!("Failed to save file content");
-      }
-  }
+    match file_content {
+        Ok(_) => {
+            println!("{}", content);
+            println!("File content saved");
+        }
+        Err(_) => {
+            println!("Failed to save file content");
+        }
+    }
+
+    let mut new_path = PathBuf::from(&path);
+    new_path.set_file_name(format!("{}.json", name));
+    let new_path_str = new_path.to_string_lossy().into_owned();
+
+    match std::fs::rename(&path, &new_path_str) {
+        Ok(_) => println!("File name updated"),
+        Err(err) => println!("Failed to update file name: {}", err),
+    }
 }

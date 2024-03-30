@@ -26,26 +26,32 @@ export const Sidebar = () => {
 				<TopNav>
 					<div className="flex gap-0.5 flex-col mt-2">
 						{data?.map((file, index) => (
-							<Link
-								to={"file/" + file.filename}
-								search={{
-									path: file.path,
-								}}
-								key={index}
-								className={`flex gap-2 hover:bg-hover rounded ${
-									name === file.filename ? "bg-hover" : ""
-								}`}
-							>
-								<div className="flex items-center gap-2 py-1 px-2 cursor-pointer text-gray-600">
-									{file.extension === "folder" && (
-										<IconFolder size={16} stroke={1} />
-									)}
-									{file.extension === "json" && (
-										<IconScript size={16} stroke={1} />
-									)}
-									<p className="text-xs">{file.filename}</p>
-								</div>
-							</Link>
+							<>
+								{file.extension === "folder" && (
+									<div className="flex items-center gap-2 py-1 px-2 cursor-pointer text-gray-600 hover:bg-hover rounded">
+										<IconFolder size={16} stroke={1.5} />
+
+										<p className="text-xs font-semibold">{file.filename}</p>
+									</div>
+								)}
+								{file.extension === "json" && (
+									<Link
+										to={"file/" + file.filename}
+										search={{
+											path: file.path,
+										}}
+										key={index}
+										className={`flex gap-2 hover:bg-hover rounded ${
+											name === file.filename ? "bg-hover" : ""
+										}`}
+									>
+										<div className="flex items-center gap-2 py-1 px-2 cursor-pointer text-gray-600">
+											<IconScript size={16} stroke={1.5} />
+											<p className="text-xs font-semibold">{file.filename}</p>
+										</div>
+									</Link>
+								)}
+							</>
 						))}
 					</div>
 				</TopNav>

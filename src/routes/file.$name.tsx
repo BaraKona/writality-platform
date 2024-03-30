@@ -5,7 +5,7 @@ import { BlockNoteView } from "@blocknote/react";
 import "@blocknote/react/style.css";
 import { TextInput } from "@mantine/core";
 import { useSaveFile } from "../hooks/useSaveFile";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { BlockNoteEditor } from "@blocknote/core";
 
 export const Route = createFileRoute("/file/$name")({
@@ -16,6 +16,8 @@ function PostComponent() {
 	const { name } = Route.useParams();
 	// @ts-expect-error - path will be defined
 	const { path } = Route.useSearch();
+
+	const [na, setName] = useState(name);
 
 	console.log({
 		name,
@@ -40,9 +42,17 @@ function PostComponent() {
 		});
 	}, [data]);
 
+	function save() {
+		saveFile({
+			path,
+			content: JSON.stringify(editor?.document),
+			name: na,
+		});
+	}
+
 	return (
 		<div
-			className="max-w-screen-md mx-auto grow overflow-y-auto h-[calc(100vh-5rem)]"
+			className="max-w-4xl mx-auto grow overflow-y-auto h-[calc(100vh-5rem)]"
 			key={path}
 		>
 			<div className="flex flex-col gap-2 pt-10 h-full grow">
@@ -51,6 +61,8 @@ function PostComponent() {
 					multiple
 					defaultValue={name}
 					key={path}
+					onBlur={save}
+					onChange={(e) => setName(e.currentTarget.value)}
 					className="w-full mb-4 border-0 px-10"
 					classNames={{
 						input:
@@ -65,7 +77,11 @@ function PostComponent() {
 						className="grow h-full text-gray-600"
 						theme={"light"}
 						onChange={() =>
-							saveFile({ path, content: JSON.stringify(editor.document) })
+							saveFile({
+								path,
+								content: JSON.stringify(editor.document),
+								name: na,
+							})
 						}
 					/>
 				)}

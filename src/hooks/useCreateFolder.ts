@@ -1,16 +1,12 @@
 import { invoke } from "@tauri-apps/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export function useSaveFile() {
+export const useCreateFolder = () => {
 	const queryClient = useQueryClient();
+
 	return useMutation({
-		mutationKey: ["save_file"],
-		mutationFn: async (file: {
-			path: string;
-			content: string;
-			name: string;
-		}) => {
-			return await invoke("save_file_content", file);
+		mutationFn: async () => {
+			return await invoke("create_folder");
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({
@@ -18,4 +14,4 @@ export function useSaveFile() {
 			});
 		},
 	});
-}
+};

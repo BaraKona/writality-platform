@@ -6,15 +6,17 @@ import {
 } from "@tabler/icons-react";
 import { IconButtonWrapper } from "../button/IconButtonWrapper";
 import { useCreateFiles } from "../../hooks/useCreateFiles";
+import { useCreateFolder } from "../../hooks/useCreateFolder";
 
 export const TopNav = ({ children }: { children: React.ReactNode }) => {
 	const { mutate: createFile } = useCreateFiles();
+	const { mutate: createFolder } = useCreateFolder();
 
 	return (
 		<div className="px-2 w-full">
 			<div className="flex justify-center items-center gap-1">
 				<IconButtonWrapper
-					onClick={() => {}}
+					onClick={createFolder}
 					position="bottom"
 					name="Create folder"
 				>
