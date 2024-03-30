@@ -7,6 +7,7 @@ import { TextInput } from "@mantine/core";
 import { useSaveFile } from "../hooks/useSaveFile";
 import { useMemo, useState } from "react";
 import { BlockNoteEditor } from "@blocknote/core";
+import { useUpdateFileName } from "../hooks/useUpdateFileName";
 
 export const Route = createFileRoute("/file/$name")({
 	component: PostComponent,
@@ -22,27 +23,30 @@ function PostComponent() {
 	const { data, isLoading } = useFile(path);
 
 	const { mutate: saveFile } = useSaveFile();
+	const { mutate: updateFileName } = useUpdateFileName();
 
 	const editor = useMemo(() => {
-		if (isLoading || !data || data === "") {
+		if (isLoading || !data) {
 			return undefined;
+		} else {
+			try {
+				const content = JSON.parse(data);
+				return BlockNoteEditor.create({
+					initialContent: JSON.parse(content.content),
+				});
+			} catch (e) {
+				console.error(e);
+				return BlockNoteEditor.create();
+			}
 		}
-
-		const editorContent = JSON.parse(data);
-
-		return BlockNoteEditor.create({
-			initialContent: editorContent?.content
-				? JSON.parse(editorContent?.content)
-				: undefined,
-		});
 	}, [data]);
 
 	function save() {
 		console.log("Saving", name);
-		saveFile({
+		updateFileName({
 			path,
-			content: JSON.stringify(editor?.document),
-			name,
+			newName: na,
+			oldName: name,
 		});
 	}
 

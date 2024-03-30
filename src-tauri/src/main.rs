@@ -15,7 +15,8 @@ fn main() {
       create_folder,
       create_file_json,
       get_file_content,
-      save_file_content
+      save_file_content,
+       update_file_name
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
@@ -343,6 +344,27 @@ async fn save_file_content(path: String, content: String, name: String) {
         },
         Err(_) => {
             println!("Failed to update file content");
+        }
+    }
+}
+
+#[tauri::command]
+async fn update_file_name(path: String, old_name: String, new_name: String) -> String{
+    // Update file name
+    let new_path = path.replace(&old_name, &new_name);
+    let rename_file = std::fs::rename(&
+        path,
+        new_path,
+    );
+
+    match rename_file {
+        Ok(_) => {
+            println!("File name updated");
+            return new_name;
+        },
+        Err(_) => {
+            println!("Failed to update file name");
+            return old_name;
         }
     }
 }
