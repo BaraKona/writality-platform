@@ -13,6 +13,8 @@ export default {
 				hover: "#f0f0f0",
 				border: "#e0e0e0",
 				text: "#394251",
+				primary: "#8AAAD1",
+				primaryHover: "#7A9AC1",
 			},
 		},
 	},
