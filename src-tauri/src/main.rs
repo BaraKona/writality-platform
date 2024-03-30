@@ -323,49 +323,26 @@ async fn get_file_content(path: String) -> String {
 
 #[tauri::command]
 async fn save_file_content(path: String, content: String, name: String) {
-    let mut new_path = PathBuf::from(&path);
-    new_path.set_file_name(format!("{}.json", name));
-    let new_path_str = new_path.to_string_lossy().into_owned();
+    // Serialize the content string into a JSON value
+    let json_content = json!(content);
 
-    let rename_result = rename_file(path.clone(), name).await;
+    // Update file content
+    let new_file = std::fs::write(
+        format!("{}", path),
+        format!(
+            "{{\n  \"dateCreated\": \"{}\",\n  \"content\": {},\n  \"dateModified\": \"{}\"\n}}",
+            Utc::now().to_rfc3339(),
+            json_content.to_string(),
+            Utc::now().to_rfc3339()
+        ),
+    );
 
-    match rename_result {
+    match new_file {
         Ok(_) => {
-            let json_content = json!(content);
-            let file_content = async {
-                std::fs::write(
-                    &new_path_str,
-                    format!(
-                        "{{\n  \"dateCreated\": \"{}\",\n  \"content\": {},\n  \"dateModified\": \"{}\"\n}}",
-                        Utc::now().to_rfc3339(),
-                        json_content.to_string(),
-                        Utc::now().to_rfc3339()
-                    ),
-                )
-            };
-
-            match file_content.await {
-                Ok(_) => {
-                    println!("{}", content);
-                    println!("File content saved");
-                }
-                Err(_) => {
-                    println!("Failed to save file content");
-                    return; // Exit early if file write fails
-                }
-            }
+            println!("File content updated");
+        },
+        Err(_) => {
+            println!("Failed to update file content");
         }
-        Err(err) => println!("Failed to update file name: {}", err),
     }
-}
-
-async fn rename_file(path: String, name: String) -> std::io::Result<()> {
-    let mut new_path = PathBuf::from(&path);
-    let mut counter = 1;
-    new_path.set_file_name(format!("{}.json", name));
-    while new_path.exists() {
-        new_path.set_file_name(format!("{}({}).json", name, counter));
-        counter += 1;
-    }
-    std::fs::rename(path, new_path)
 }
