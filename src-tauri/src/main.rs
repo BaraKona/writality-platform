@@ -1,6 +1,10 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 use serde::Serialize;
+use chrono::Utc;
+use serde_json::json;
+
+
 fn main() {
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![
@@ -9,7 +13,8 @@ fn main() {
       get_all_files,
       create_folder,
       create_file_json,
-      get_file_content
+      get_file_content,
+      save_file_content
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
@@ -201,7 +206,15 @@ async fn create_file_json() {
         }
     }
 
-    let new_file = std::fs::write(format!("{}/new_file[{}].json", path, count), "{}");
+    let new_file = std::fs::write(
+      format!("{}/new_file[{}].json", path, count),
+      format!(
+          "{{\n  \"dateCreated\": \"{}\",\n  \"content\": \"\",\n  \"dateModified\": \"{}\"\n}}",
+          Utc::now().to_rfc3339(),
+          Utc::now().to_rfc3339()
+      ),
+  );
+
     match new_file {
         Ok(_) => {
             println!("New file created");
@@ -226,5 +239,29 @@ async fn get_file_content(path: String) -> String {
       println!("Failed to read file content");
       return String::from("Failed to read file content");
     }
+  }
+}
+
+#[tauri::command]
+async fn save_file_content(path: String, content: String) {
+  let json_content = json!(content);
+  let file_content = std::fs::write(
+      path,
+      format!(
+          "{{\n  \"dateCreated\": \"{}\",\n  \"content\": {},\n  \"dateModified\": \"{}\"\n}}",
+          Utc::now().to_rfc3339(),
+          json_content.to_string(),
+          Utc::now().to_rfc3339()
+      ),
+  );
+
+  match file_content {
+      Ok(_) => {
+          println!("{}", content);
+          println!("File content saved");
+      }
+      Err(_) => {
+          println!("Failed to save file content");
+      }
   }
 }

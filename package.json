@@ -11,6 +11,8 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@blocknote/core": "^0.12.3",
+		"@blocknote/react": "^0.12.3",
 		"@mantine/core": "^7.7.0",
 		"@mantine/hooks": "^7.7.0",
 		"@preact/signals-react": "^2.0.1",

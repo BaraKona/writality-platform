@@ -4,12 +4,14 @@ import { TopNav } from "./TopNav";
 import { SideNav } from "./SideNav";
 import { useFiles } from "../../hooks/useFiles";
 import { IconFolder, IconScript } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
 
 export const Sidebar = () => {
 	useSignals();
 
-	const { data, isLoading } = useFiles();
+	const { data } = useFiles();
+
+	const { name } = useParams("file") as { name: string };
 
 	return (
 		<aside
@@ -28,7 +30,9 @@ export const Sidebar = () => {
 									path: file.path,
 								}}
 								key={index}
-								className="flex gap-2 hover:bg-hover rounded"
+								className={`flex gap-2 hover:bg-hover rounded ${
+									name === file.filename ? "bg-hover" : ""
+								}`}
 							>
 								<div className="flex items-center gap-2 py-1 px-2 cursor-pointer text-gray-600">
 									{file.extension === "folder" && (

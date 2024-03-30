@@ -101,10 +101,10 @@
 			{
 				"fullscreen": false,
 				"decorations": false,
-				"height": 600,
+				"height": 1000,
 				"resizable": true,
 				"title": "Writality",
-				"width": 800
+				"width": 1600
 			}
 		]
 	}
