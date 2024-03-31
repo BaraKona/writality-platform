@@ -12,8 +12,6 @@ export const Sidebar = () => {
 
 	const { data } = useFiles();
 
-	console.log({ data });
-
 	// @ts-expect-error - path will be defined
 	const { name } = useParams("file");
 
