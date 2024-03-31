@@ -139,7 +139,7 @@ fn collect_files_and_folders(path: &str, file_info_vec: &mut Vec<FileInfo>) {
                 let file_path = entry.path();
 
                 // Get the file name without the extension
-                let filename = file_path.file_stem().unwrap().to_string_lossy().into_owned();
+                let filename = file_path.file_name().unwrap().to_string_lossy().into_owned();
 
                 // Skip .DS_Store files
                 if filename == ".DS_Store" {
@@ -347,27 +347,6 @@ async fn save_file_content(path: String, content: String, name: String) {
         }
     }
 }
-
-// #[tauri::command]
-// async fn update_file_name(path: String, old_name: String, new_name: String) -> String{
-//     // Update file name
-//     let new_path = path.replace(&old_name, &new_name);
-//     let rename_file = std::fs::rename(&
-//         path,
-//         new_path,
-//     );
-
-//     match rename_file {
-//         Ok(_) => {
-//             println!("File name updated");
-//             return new_name;
-//         },
-//         Err(_) => {
-//             println!("Failed to update file name");
-//             return old_name;
-//         }
-//     }
-// }
 
 #[tauri::command]
 async fn update_file_name(path: String, old_name: String, new_name: String) -> String {

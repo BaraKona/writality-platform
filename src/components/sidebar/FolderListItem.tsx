@@ -76,7 +76,6 @@ export const FolderListItem = ({
 							<div key={index}>
 								{file.extension === "json" && (
 									<ScriptListItem
-										level={level + 1}
 										key={index}
 										name={file.filename}
 										path={file.path}

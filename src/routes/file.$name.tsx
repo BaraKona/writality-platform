@@ -64,7 +64,7 @@ function PostComponent() {
 				<TextInput
 					height={"auto"}
 					multiple
-					defaultValue={name}
+					defaultValue={name.split(".")[0]}
 					key={path + name}
 					onBlur={save}
 					onChange={(e) => setName(e.currentTarget.value)}
