@@ -30,9 +30,14 @@ function PostComponent() {
 			return undefined;
 		} else {
 			try {
-				const content = JSON.parse(data);
+				const content = JSON.parse(data as string);
 				return BlockNoteEditor.create({
 					initialContent: JSON.parse(content.content),
+					domAttributes: {
+						editor: {
+							class: "!text-md font-semibold",
+						},
+					},
 				});
 			} catch (e) {
 				console.error(e);
@@ -52,10 +57,10 @@ function PostComponent() {
 
 	return (
 		<div
-			className="max-w-4xl mx-auto grow overflow-y-auto h-[calc(100vh-5rem)]"
+			className="max-w-[850px] mx-auto grow overflow-y-auto h-[calc(100vh-5rem)]"
 			key={path + name}
 		>
-			<div className="flex flex-col gap-2 pt-10 h-full grow">
+			<div className="flex flex-col gap-2 py-10 h-full grow">
 				<TextInput
 					height={"auto"}
 					multiple

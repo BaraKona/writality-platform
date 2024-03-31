@@ -21,7 +21,7 @@ export function useUpdateFileName() {
 			navigate({
 				to: "/file/$name",
 				params: {
-					name,
+					name: name.split("/").pop() as string,
 				},
 				search: {
 					path: name,

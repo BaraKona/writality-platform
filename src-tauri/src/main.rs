@@ -348,23 +348,41 @@ async fn save_file_content(path: String, content: String, name: String) {
     }
 }
 
+// #[tauri::command]
+// async fn update_file_name(path: String, old_name: String, new_name: String) -> String{
+//     // Update file name
+//     let new_path = path.replace(&old_name, &new_name);
+//     let rename_file = std::fs::rename(&
+//         path,
+//         new_path,
+//     );
+
+//     match rename_file {
+//         Ok(_) => {
+//             println!("File name updated");
+//             return new_name;
+//         },
+//         Err(_) => {
+//             println!("Failed to update file name");
+//             return old_name;
+//         }
+//     }
+// }
+
 #[tauri::command]
-async fn update_file_name(path: String, old_name: String, new_name: String) -> String{
+async fn update_file_name(path: String, old_name: String, new_name: String) -> String {
     // Update file name
     let new_path = path.replace(&old_name, &new_name);
-    let rename_file = std::fs::rename(&
-        path,
-        new_path,
-    );
+    let rename_file = std::fs::rename(&path, &new_path);
 
     match rename_file {
         Ok(_) => {
             println!("File name updated");
-            return new_name;
+            return new_path;
         },
         Err(_) => {
             println!("Failed to update file name");
-            return old_name;
+            return path;
         }
     }
 }

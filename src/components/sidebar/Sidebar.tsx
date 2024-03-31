@@ -50,6 +50,12 @@ export const Sidebar = () => {
 								)}
 							</>
 						))}
+
+						{data?.length === 0 && (
+							<p className="text-xs text-center text-text">
+								Fresh starts are always good. Create a new file to get started.
+							</p>
+						)}
 					</div>
 				</TopNav>
 			</section>

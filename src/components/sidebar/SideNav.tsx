@@ -8,12 +8,22 @@ import { IconButtonWrapper } from "../button/IconButtonWrapper";
 
 export const SideNav = () => {
 	return (
-		<div className="flex flex-col gap-1 border-r border-border pr-1.5">
-			<IconButtonWrapper onClick={() => {}} position="right" name="Home">
-				<IconHome size={20} stroke={1.5} />
+		<div className="flex flex-col gap-1 pr-1.5">
+			<IconButtonWrapper
+				onClick={() => {}}
+				position="right"
+				name="Home"
+				withBorder
+			>
+				<IconHome size={20} stroke={2} />
 			</IconButtonWrapper>
-			<IconButtonWrapper onClick={() => {}} position="right" name="Somewhere">
-				<IconTemplate size={20} stroke={1.5} />
+			<IconButtonWrapper
+				onClick={() => {}}
+				position="right"
+				name="Somewhere"
+				withBorder
+			>
+				<IconTemplate size={20} stroke={2} />
 			</IconButtonWrapper>
 
 			<IconButtonWrapper
@@ -21,11 +31,17 @@ export const SideNav = () => {
 				position="right"
 				className="mt-auto"
 				name="Help"
+				withBorder
 			>
-				<IconHelpHexagon size={20} stroke={1.5} />
+				<IconHelpHexagon size={20} stroke={2} />
 			</IconButtonWrapper>
-			<IconButtonWrapper onClick={() => {}} position="right" name="Settings">
-				<IconSettings size={20} stroke={1.5} />
+			<IconButtonWrapper
+				onClick={() => {}}
+				position="right"
+				name="Settings"
+				withBorder
+			>
+				<IconSettings size={20} stroke={2} />
 			</IconButtonWrapper>
 		</div>
 	);

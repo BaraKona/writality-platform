@@ -13,7 +13,7 @@ export default {
 				backgroundHover: "#f9f9f9",
 				hover: "#f0f0f0",
 				border: "#d2d2d2",
-				text: "#394251",
+				text: "#151414",
 				primary: "#8AAAD1",
 				primaryHover: "#7A9AC1",
 				black: "#151414",
