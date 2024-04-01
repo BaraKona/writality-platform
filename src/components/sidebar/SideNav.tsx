@@ -3,6 +3,7 @@ import {
 	IconHome,
 	IconHelpHexagon,
 	IconSettings,
+	IconStatusChange,
 } from "@tabler/icons-react";
 import { IconButtonWrapper } from "../button/IconButtonWrapper";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
@@ -12,7 +13,7 @@ export const SideNav = () => {
 	const navigate = useNavigate();
 
 	return (
-		<div className="flex flex-col gap-1 pr-1.5">
+		<div className="flex flex-col gap-1 p-2 rounded bg-matteBlack items-center justify-center">
 			<IconButtonWrapper
 				onClick={() =>
 					navigate({
@@ -21,7 +22,7 @@ export const SideNav = () => {
 				}
 				position="right"
 				name="Home"
-				withBorder
+				className="text-background"
 				active={router.location.pathname === "/"}
 			>
 				<IconHome size={20} stroke={2} />
@@ -30,17 +31,24 @@ export const SideNav = () => {
 				onClick={() => {}}
 				position="right"
 				name="Somewhere"
-				withBorder
+				className="text-background"
 			>
 				<IconTemplate size={20} stroke={2} />
 			</IconButtonWrapper>
 
 			<IconButtonWrapper
 				onClick={() => {}}
+				className="mt-auto text-background"
 				position="right"
-				className="mt-auto"
+				name="Switch Projects"
+			>
+				<IconStatusChange size={20} stroke={2} />
+			</IconButtonWrapper>
+			<IconButtonWrapper
+				onClick={() => {}}
+				position="right"
 				name="Help"
-				withBorder
+				className="text-background"
 			>
 				<IconHelpHexagon size={20} stroke={2} />
 			</IconButtonWrapper>
@@ -48,7 +56,7 @@ export const SideNav = () => {
 				onClick={() => {}}
 				position="right"
 				name="Settings"
-				withBorder
+				className="text-background"
 			>
 				<IconSettings size={20} stroke={2} />
 			</IconButtonWrapper>

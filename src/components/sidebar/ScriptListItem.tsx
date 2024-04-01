@@ -16,10 +16,10 @@ export const ScriptListItem = ({
 			search={{
 				path,
 			}}
-			className={`flex gap-2 hover:bg-blackHover hover:text-background rounded ${
+			className={`flex gap-2 hover:text-background rounded ${
 				name === currentPath
-					? "bg-black hover:bg-blackHover text-background"
-					: ""
+					? "bg-matteBlack hover:bg-matteBlack text-background"
+					: "hover:bg-matteBlack/90"
 			}`}
 		>
 			<div className="flex items-center gap-2 py-1 px-2 cursor-pointer">

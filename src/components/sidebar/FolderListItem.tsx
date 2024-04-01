@@ -38,7 +38,7 @@ export const FolderListItem = ({
 	return (
 		<div className="flex flex-col gap-0.5">
 			<li
-				className={`flex items-center w-full text-xs font-semibold px-2 py-1 rounded cursor-pointer text-text hover:bg-blackHover hover:text-background`}
+				className={`flex items-center w-full text-xs font-semibold px-2 py-1 rounded cursor-pointer text-text hover:bg-matteBlack hover:text-background`}
 				onClick={() => {
 					setOpen(!open);
 				}}

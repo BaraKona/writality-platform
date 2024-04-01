@@ -18,14 +18,17 @@ export const IconButtonWrapper: FC<{
 			className="text-xs"
 			position={position}
 			classNames={{
-				tooltip: "!p-0.5 !px-2 !text-xs",
+				tooltip: "!p-0.5 !px-2 !text-xs !bg-matteBlack",
 			}}
 		>
 			<button
 				onClick={onClick}
-				className={`p-0.5 rounded hover:bg-black hover:border-black hover:text-background ${className} ${withBorder ? "border border-border" : ""} ${active ? "bg-black text-background border-black hover:bg-blackHover" : ""}`}
+				className={`group relative p-0.5 rounded hover:bg-matteBlack hover:border-black hover:text-background ${className} ${withBorder ? "border border-border" : ""} ${active ? "bg-matteBlack text-background border-black hover:bg-matteBlack" : ""}`}
 			>
 				{children}
+				<div
+					className={`h-6 w-1 rounded-tr rounded-br top-0 bottom-0 my-auto -left-2 absolute ${active ? "bg-background " : "group-hover:bg-background/50"}`}
+				></div>
 			</button>
 		</Tooltip>
 	);
