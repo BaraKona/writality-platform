@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 body {
-	background: black;
+	background: #28282b !important;
 }
 
 /* For Firefox */
 * {
 	scrollbar-width: thin;
-	scrollbar-color: 	black transparent;
+	scrollbar-color: #e6e6e6 transparent;
 }
 
 /* For Chrome, Safari, and Edge */
@@ -20,9 +20,9 @@ body {
 	background: transparent; /* color of the tracking area */
 }
 *::-webkit-scrollbar-thumb {
-	background-color: 	black; /* color of the scroll thumb */
+	background-color: #e6e6e6; /* color of the scroll thumb */
 	border-radius: 20px; /* roundness of the scroll thumb */
-	border: 3px solid 	black; /* creates padding around scroll thumb */
+	border: 3px solid #e6e6e6; /* creates padding around scroll thumb */
 }
 
 html {

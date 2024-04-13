@@ -38,7 +38,7 @@ async fn check_setup() -> String {
     },
     Err(_) => {
       println!("Failed to read setup file");
-      return String::from("Failed to read setup file");
+      return String::from("");
     }
   }
 }
@@ -270,7 +270,6 @@ async fn create_file_json() {
             return;
         }
     };
-
     // Add new file to the path. so it goes new_file[1].json, new_file[2].json, etc.
     let files = std::fs::read_dir(path).unwrap();
     let mut count = 0;

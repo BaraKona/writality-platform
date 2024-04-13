@@ -25,11 +25,6 @@ export const Sidebar = () => {
 							{data?.map((file, index) => (
 								<>
 									{file.extension === "folder" && (
-										// <div className="flex items-center gap-2 py-1 px-2 cursor-pointer text-gray-600 hover:bg-hover rounded">
-										// 	<IconFolder size={16} stroke={1.5} />
-
-										// 	<p className="text-xs font-semibold">{file.filename}</p>
-										// </div>
 										<FolderListItem
 											files={file.children}
 											key={index}

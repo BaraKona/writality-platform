@@ -13,7 +13,7 @@ export const Route = createRootRoute({
 
 function SetupApp() {
 	const { data, isLoading } = useSetup();
-
+	console.log(data);
 	useEffect(() => {
 		if (data) {
 			console.log({ data });
@@ -29,7 +29,7 @@ function SetupApp() {
 			<Header />
 			<div className="grow flex gap-px relative">
 				<Sidebar />
-				<div className="grow bg-background rounded p-2">
+				<div className="grow rounded p-2">
 					<Outlet />
 				</div>
 			</div>

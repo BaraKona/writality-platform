@@ -1,4 +1,4 @@
-import { IconFolderFilled, IconFolderOpen } from "@tabler/icons-react";
+import { IconFolder, IconFolderOpen } from "@tabler/icons-react";
 import { useLocalStorage } from "@mantine/hooks";
 import { AnimatePresence, motion } from "framer-motion";
 import { ScriptListItem } from "./ScriptListItem";
@@ -38,7 +38,7 @@ export const FolderListItem = ({
 	return (
 		<div className="flex flex-col gap-0.5">
 			<li
-				className={`flex items-center w-full text-xs font-semibold px-2 py-1 rounded cursor-pointer text-text hover:bg-matteBlack hover:text-background`}
+				className={`flex items-center w-full text-xs font-medium px-2 py-1 rounded cursor-default text-textLight hover:text-matteBlack`}
 				onClick={() => {
 					setOpen(!open);
 				}}
@@ -50,7 +50,7 @@ export const FolderListItem = ({
 						className="min-w-4"
 					/>
 				) : (
-					<IconFolderFilled
+					<IconFolder
 						size={16}
 						// className={`${levelColour[level % levelColour.length]} min-w-4`}
 						className="min-w-4"

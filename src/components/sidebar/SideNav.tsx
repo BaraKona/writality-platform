@@ -4,6 +4,7 @@ import {
 	IconHelpHexagon,
 	IconSettings,
 	IconStatusChange,
+	IconChartBar,
 } from "@tabler/icons-react";
 import { IconButtonWrapper } from "../button/IconButtonWrapper";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
@@ -13,7 +14,7 @@ export const SideNav = () => {
 	const navigate = useNavigate();
 
 	return (
-		<div className="flex flex-col gap-1 p-2 rounded bg-matteBlack items-center justify-center">
+		<div className="flex flex-col gap-2 p-2 rounded bg-matteBlack items-center justify-center">
 			<IconButtonWrapper
 				onClick={() =>
 					navigate({
@@ -25,7 +26,7 @@ export const SideNav = () => {
 				className="text-background"
 				active={router.location.pathname === "/"}
 			>
-				<IconHome size={20} stroke={2} />
+				<IconHome size={20} stroke={1.5} />
 			</IconButtonWrapper>
 			<IconButtonWrapper
 				onClick={() => {}}
@@ -33,7 +34,20 @@ export const SideNav = () => {
 				name="Somewhere"
 				className="text-background"
 			>
-				<IconTemplate size={20} stroke={2} />
+				<IconTemplate size={20} stroke={1.5} />
+			</IconButtonWrapper>
+			<IconButtonWrapper
+				onClick={() =>
+					navigate({
+						to: "/analytics",
+					})
+				}
+				position="right"
+				name="Analytics"
+				className="text-background"
+				active={router.location.pathname === "/analytics"}
+			>
+				<IconChartBar size={20} stroke={1.5} />
 			</IconButtonWrapper>
 
 			<IconButtonWrapper
@@ -42,7 +56,7 @@ export const SideNav = () => {
 				position="right"
 				name="Switch Projects"
 			>
-				<IconStatusChange size={20} stroke={2} />
+				<IconStatusChange size={20} stroke={1.5} />
 			</IconButtonWrapper>
 			<IconButtonWrapper
 				onClick={() => {}}
@@ -50,7 +64,7 @@ export const SideNav = () => {
 				name="Help"
 				className="text-background"
 			>
-				<IconHelpHexagon size={20} stroke={2} />
+				<IconHelpHexagon size={20} stroke={1.5} />
 			</IconButtonWrapper>
 			<IconButtonWrapper
 				onClick={() => {}}
@@ -58,7 +72,7 @@ export const SideNav = () => {
 				name="Settings"
 				className="text-background"
 			>
-				<IconSettings size={20} stroke={2} />
+				<IconSettings size={20} stroke={1.5} />
 			</IconButtonWrapper>
 		</div>
 	);

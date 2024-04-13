@@ -14,6 +14,7 @@ export default {
 				hover: "#f0f0f0",
 				border: "#d2d2d2",
 				text: "#151414",
+				textLight: "#8A8A8A",
 				primary: "#8AAAD1",
 				primaryHover: "#7A9AC1",
 				// black: "#151414",
