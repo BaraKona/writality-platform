@@ -1,11 +1,11 @@
 import {
-	IconHome,
 	IconHelpHexagon,
 	IconSettings,
 	IconStatusChange,
 	IconChartBar,
 } from "@tabler/icons-react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { Network } from "../icons/Network";
 
 export const MenuItems = () => {
 	const router = useRouterState();
@@ -21,8 +21,8 @@ export const MenuItems = () => {
 				}
 				active={router.location.pathname === "/"}
 			>
-				<IconHome size={18} stroke={1.5} />
-				Home
+				<Network size={18} />
+				Overview
 			</ListItem>
 
 			<ListItem
