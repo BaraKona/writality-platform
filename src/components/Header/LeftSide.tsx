@@ -1,18 +1,14 @@
-import {
-	IconArrowsMaximize,
-	IconLayoutSidebar,
-	IconMinus,
-	IconX,
-} from "@tabler/icons-react";
+import { IconArrowsMaximize, IconMinus, IconX } from "@tabler/icons-react";
 import { isFullscreen, isSidebarOpen } from "../../signals";
 import { appWindow } from "@tauri-apps/api/window";
 import { useSignals } from "@preact/signals-react/runtime";
 import { IconButtonWrapper } from "../button/IconButtonWrapper";
+import dockLeft from "../../assets/dock-left.svg";
 
 export const LeftSide = () => {
 	useSignals();
 	return (
-		<div className="flex gap-2 rounded-lg px-2 items-center">
+		<div className="flex gap-2 rounded-lg px-2 items-center absolute left-2 top-2 z-10">
 			<IconButtonWrapper
 				name="Exit"
 				className="rounded h-4 w-4 p-0.5 bg-red-300/50 flex items-center justify-center"
@@ -39,8 +35,9 @@ export const LeftSide = () => {
 			<IconButtonWrapper
 				name="Toggle Sidebar"
 				onClick={() => (isSidebarOpen.value = !isSidebarOpen.value)}
+				className="hover:bg-matteBlack/5"
 			>
-				<IconLayoutSidebar size={18} stroke={1.5} />
+				<img src={dockLeft} alt="dock right" className="w-4 h-4" />
 			</IconButtonWrapper>
 		</div>
 	);

@@ -1,7 +1,6 @@
 import { useSignals } from "@preact/signals-react/runtime";
 import { isSidebarOpen } from "../../signals";
 import { TopNav } from "./TopNav";
-import { SideNav } from "./SideNav";
 import { useFiles } from "../../hooks/useFiles";
 import { useParams } from "@tanstack/react-router";
 import { FolderListItem } from "./FolderListItem";
@@ -16,12 +15,14 @@ export const Sidebar = () => {
 	const { name } = useParams("file");
 
 	return (
-		<aside className={`p-2 ${isSidebarOpen.value ? "w-64 " : "w-12 "}`}>
+		<aside
+			className={`p-2 rounded-l-md pt-10 relative bg-backgroundHover ${isSidebarOpen.value ? "w-64 " : "w-0 hidden"}`}
+		>
 			<section className="flex h-full grow">
-				<SideNav />
+				{/* <SideNav />          */}
 				<div className={`w-full ${isSidebarOpen.value ? "block" : "hidden"}`}>
 					<TopNav>
-						<div className="flex gap-0.5 flex-col pr-0.5 mt-2 h-[calc(100vh-6rem)] overflow-y-auto">
+						<div className="flex gap-0.5 flex-col pr-0.5 mt-2 h-[calc(100vh-20rem)] overflow-y-auto">
 							{data?.map((file, index) => (
 								<>
 									{file.extension === "folder" && (

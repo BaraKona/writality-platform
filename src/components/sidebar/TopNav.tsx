@@ -6,6 +6,7 @@ import {
 import { IconButtonWrapper } from "../button/IconButtonWrapper";
 import { useCreateFiles } from "../../hooks/useCreateFiles";
 import { useCreateFolder } from "../../hooks/useCreateFolder";
+import { SideNav } from "./MenuItems";
 
 export const TopNav = ({ children }: { children: React.ReactNode }) => {
 	const { mutate: createFile } = useCreateFiles();
@@ -13,6 +14,7 @@ export const TopNav = ({ children }: { children: React.ReactNode }) => {
 
 	return (
 		<div className="px-1 w-full">
+			<SideNav />
 			<div className="flex justify-center items-center gap-1">
 				<IconButtonWrapper
 					withBorder
