@@ -23,12 +23,9 @@ export const IconButtonWrapper: FC<{
 		>
 			<button
 				onClick={onClick}
-				className={`group relative p-0.5 rounded hover:bg-matteBlack hover:border-black hover:text-background ${className} ${withBorder ? "border border-border" : ""} ${active ? "bg-matteBlack text-background border-black hover:bg-matteBlack" : ""}`}
+				className={`group relative p-0.5 rounded hover:bg-hover  ${className} ${withBorder ? "border border-border" : ""} ${active ? "bg-matteBlack text-background border-black hover:bg-matteBlack" : ""}`}
 			>
 				{children}
-				<div
-					className={`h-6 w-1 rounded-tr rounded-br top-0 bottom-0 my-auto -left-2 absolute ${active ? "bg-background " : "group-hover:bg-background/50"}`}
-				></div>
 			</button>
 		</Tooltip>
 	);

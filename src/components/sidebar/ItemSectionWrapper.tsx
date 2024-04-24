@@ -1,44 +1,42 @@
-import {
-	IconFolderPlus,
-	IconScriptPlus,
-	IconPencilPlus,
-} from "@tabler/icons-react";
+import { IconBook2, IconFilePlus, IconPencilPlus } from "@tabler/icons-react";
 import { IconButtonWrapper } from "../button/IconButtonWrapper";
 import { useCreateFiles } from "../../hooks/useCreateFiles";
 import { useCreateFolder } from "../../hooks/useCreateFolder";
-import { SideNav } from "./MenuItems";
 
-export const TopNav = ({ children }: { children: React.ReactNode }) => {
+export const ItemSectionWrapper = ({
+	children,
+}: {
+	children: React.ReactNode;
+}) => {
 	const { mutate: createFile } = useCreateFiles();
 	const { mutate: createFolder } = useCreateFolder();
 
 	return (
-		<div className="px-1 w-full">
-			<SideNav />
-			<div className="flex justify-center items-center gap-1">
+		<div className="px-1 w-full mt-4 flex grow flex-col overflow-y-auto h-[calc(100vh-20rem)]">
+			<div className="flex justify-end items-center gap-1">
+				<div className="text-xs justify-self-start mr-auto font-medium">
+					Files
+				</div>
 				<IconButtonWrapper
-					withBorder
 					onClick={createFolder}
 					position="bottom"
 					name="Create folder"
 				>
-					<IconFolderPlus size={18} stroke={1.5} />
+					<IconBook2 size={16} stroke={1.5} />
 				</IconButtonWrapper>
 				<IconButtonWrapper
-					withBorder
 					onClick={createFile}
 					position="bottom"
 					name="Create script"
 				>
-					<IconScriptPlus size={18} stroke={1.5} />
+					<IconFilePlus size={16} stroke={1.5} />
 				</IconButtonWrapper>
 				<IconButtonWrapper
-					withBorder
 					onClick={() => {}}
 					position="bottom"
 					name="Create canvas"
 				>
-					<IconPencilPlus size={18} stroke={1.5} />
+					<IconPencilPlus size={16} stroke={1.5} />
 				</IconButtonWrapper>
 			</div>
 			{children}

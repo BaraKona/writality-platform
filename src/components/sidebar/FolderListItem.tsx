@@ -1,8 +1,12 @@
-import { IconFolder, IconFolderOpen } from "@tabler/icons-react";
 import { useLocalStorage } from "@mantine/hooks";
 import { AnimatePresence, motion } from "framer-motion";
 import { ScriptListItem } from "./ScriptListItem";
 import { FileInfo } from "../../hooks/useFiles";
+import {
+	IconBook2,
+	IconChevronDown,
+	IconChevronRight,
+} from "@tabler/icons-react";
 
 export const FolderListItem = ({
 	name,
@@ -22,41 +26,26 @@ export const FolderListItem = ({
 		defaultValue: false,
 	});
 
-	// const levelColour = [
-	// 	"dark:!text-[#B46FCC]",
-	// 	"dark:!text-[#E68584]",
-	// 	"dark:!text-[#6F9AED]",
-	// 	"dark:!text-[#8CCB9E]",
-	// 	"dark:!text-[#F7D66B]",
-	// 	"dark:!text-[#6BA2A8]",
-	// 	"dark:!text-[#E1AE87]",
-	// 	"dark:!text-[#A7D0C0]",
-	// 	"dark:!text-[#FFBC5C]",
-	// 	"dark:!text-[#D3A0D8]",
-	// ];
-
 	return (
 		<div className="flex flex-col gap-0.5">
 			<li
-				className={`flex items-center w-full text-xs font-medium px-2 py-1 rounded cursor-default text-textLight hover:text-matteBlack`}
-				onClick={() => {
-					setOpen(!open);
-				}}
+				className={`flex items-center w-full text-xs font-medium px-1 py-1 rounded cursor-default text-textLight hover:text-matteBlack`}
 			>
-				{open ? (
-					<IconFolderOpen
-						size={16}
-						// className={`${levelColour[level % levelColour.length]} min-w-4`}
-						className="min-w-4"
-					/>
-				) : (
-					<IconFolder
-						size={16}
-						// className={`${levelColour[level % levelColour.length]} min-w-4`}
-						className="min-w-4"
-					/>
-				)}
+				<IconBook2 size={16} />
+
 				<span className="ml-2 w-auto truncate">{name}</span>
+				<button
+					className="ml-auto"
+					onClick={() => {
+						setOpen(!open);
+					}}
+				>
+					{open ? (
+						<IconChevronDown size={14} />
+					) : (
+						<IconChevronRight size={14} />
+					)}
+				</button>
 			</li>
 
 			<AnimatePresence initial={true}>
@@ -80,6 +69,7 @@ export const FolderListItem = ({
 										name={file.filename}
 										path={file.path}
 										currentPath={currentPath}
+										level={level + 1}
 									/>
 								)}
 								{file.extension === "folder" && (

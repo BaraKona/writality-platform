@@ -1,10 +1,11 @@
 import { useSignals } from "@preact/signals-react/runtime";
 import { isSidebarOpen } from "../../signals";
-import { TopNav } from "./TopNav";
+import { ItemSectionWrapper } from "./ItemSectionWrapper";
 import { useFiles } from "../../hooks/useFiles";
 import { useParams } from "@tanstack/react-router";
 import { FolderListItem } from "./FolderListItem";
 import { ScriptListItem } from "./ScriptListItem";
+import { MenuItems } from "./MenuItems";
 
 export const Sidebar = () => {
 	useSignals();
@@ -16,13 +17,15 @@ export const Sidebar = () => {
 
 	return (
 		<aside
-			className={`p-2 rounded-l-md pt-10 relative bg-backgroundHover ${isSidebarOpen.value ? "w-64 " : "w-0 hidden"}`}
+			className={`p-2 rounded-l-md relative overflow-y-auto bg-backgroundHover ${isSidebarOpen.value ? "w-64 " : "w-0 hidden"}`}
 		>
 			<section className="flex h-full grow">
-				{/* <SideNav />          */}
-				<div className={`w-full ${isSidebarOpen.value ? "block" : "hidden"}`}>
-					<TopNav>
-						<div className="flex gap-0.5 flex-col pr-0.5 mt-2 h-[calc(100vh-20rem)] overflow-y-auto">
+				<div
+					className={`w-full overflow-y-auto grow flex flex-col ${isSidebarOpen.value ? "block" : "hidden"}`}
+				>
+					<MenuItems />
+					<ItemSectionWrapper>
+						<div className="flex flex-col gap-0.5 mt-2 flex-grow overflow-y-auto">
 							{data?.map((file, index) => (
 								<>
 									{file.extension === "folder" && (
@@ -41,6 +44,7 @@ export const Sidebar = () => {
 											key={index}
 											name={file.filename}
 											path={file.path}
+											level={0}
 										/>
 									)}
 								</>
@@ -53,7 +57,7 @@ export const Sidebar = () => {
 								</p>
 							)}
 						</div>
-					</TopNav>
+					</ItemSectionWrapper>
 				</div>
 			</section>
 		</aside>

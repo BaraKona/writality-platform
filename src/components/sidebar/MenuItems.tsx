@@ -7,7 +7,7 @@ import {
 } from "@tabler/icons-react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 
-export const SideNav = () => {
+export const MenuItems = () => {
 	const router = useRouterState();
 	const navigate = useNavigate();
 
