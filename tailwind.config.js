@@ -20,6 +20,7 @@ export default {
 				// black: "#151414",
 				matteBlack: "#28282B",
 				blackHover: "#0e0e0e",
+				highLight: "#006400",
 			},
 		},
 	},
