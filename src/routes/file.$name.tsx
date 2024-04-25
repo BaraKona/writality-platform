@@ -3,7 +3,7 @@ import { useFile } from "../hooks/useFile";
 import "@blocknote/core/fonts/inter.css";
 import { BlockNoteView } from "@blocknote/react";
 import "@blocknote/react/style.css";
-import { TextInput } from "@mantine/core";
+import { Skeleton, Textarea } from "@mantine/core";
 import { useSaveFile } from "../hooks/useSaveFile";
 import { useMemo, useState } from "react";
 import { BlockNoteEditor } from "@blocknote/core";
@@ -57,25 +57,29 @@ function PostComponent() {
 
 	return (
 		<div
-			className="max-w-[850px] mx-auto grow overflow-y-auto h-[calc(100vh-5rem)]"
+			className="py-24  grow overflow-y-auto h-[calc(100vh-5rem)]"
 			key={path + name}
 		>
-			<div className="flex flex-col gap-2 py-10 h-full grow">
-				<TextInput
-					height={"auto"}
-					multiple
+			<div className="flex flex-col gap-2 py-10 h-full grow max-w-[850px] mx-auto">
+				<Textarea
 					defaultValue={name.split(".")[0]}
 					key={path + name}
 					onBlur={save}
+					autosize
+					minRows={1}
 					onChange={(e) => setName(e.currentTarget.value)}
 					className="w-full mb-4 border-0 px-10"
 					classNames={{
 						input:
-							"!border-0 !text-5xl !font-extrabold !text-text !bg-transparent !outline-none !placeholder-gray-400 !focus:placeholder-gray-600",
+							"!border-0 !text-4xl !font-bold !text-text !h-fit !overflow-hidden !bg-transparent !outline-none !placeholder-gray-400 !focus:placeholder-gray-600",
 					}}
 				/>
 				{editor === undefined ? (
-					<div>Loading...</div>
+					<div className="px-12 flex flex-col gap-2">
+						{[...Array(5)].map((_, i) => (
+							<Skeleton key={i} height={20} />
+						))}
+					</div>
 				) : (
 					<BlockNoteView
 						editor={editor}

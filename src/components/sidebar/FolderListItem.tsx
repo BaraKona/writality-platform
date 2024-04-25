@@ -51,7 +51,7 @@ export const FolderListItem = ({
 			<AnimatePresence initial={true}>
 				{open && (
 					<motion.ul
-						className="border-l border-border ml-3.5 pl-1 flex flex-col gap-0.5"
+						className="border-l border-border ml-3 pl-1 flex flex-col gap-0.5"
 						initial={{ opacity: 0, height: 0 }}
 						animate={{ opacity: 1, height: "auto" }}
 						exit={{ opacity: 0, height: 0 }}

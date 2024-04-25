@@ -1,13 +1,8 @@
-import { Center } from "./Center";
-import { RightSide } from "./Right";
+import { Left } from "./Left";
 export const Header = () => {
 	return (
-		<div
-			data-tauri-drag-region
-			className="flex items-center text-slate-600 w-full p-1"
-		>
-			<Center />
-			<RightSide />
+		<div className="items-center p-1 absolute">
+			<Left />
 		</div>
 	);
 };
